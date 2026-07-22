@@ -1,0 +1,25 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    
+    # Use the official Cypress image with Node v24.15.0 pre-installed
+    container:
+      image: cypress/included:14.0.0-node24.15.0
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Run Cypress tests
+        run: npx cypress run
