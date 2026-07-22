@@ -1,0 +1,36 @@
+{
+  "testAccounts": {
+    "admin": {
+      "username": "dizonrl20@gmail.com",
+      "password": "admin",
+      "displayName": "Administrator"
+    },
+    "employee": {
+      "username": "wena@wen.ca",
+      "password": "admin",
+      "displayName": "Elena Rodriguez"
+    }
+  },
+  "consultationCareTypes": [
+    "In-Home Care",
+    "Dementia Care",
+    "24/7 Companion Care",
+    "Palliative Care"
+  ],
+  "partnershipOrgTypes": [
+    "Retirement Home",
+    "Hospital",
+    "Long-Term Care Facility",
+    "Medical Clinic"
+  ],
+  "staticPages": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "requiredText": "Information Collection"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "requiredText": "Agreement to Terms"
+    }
+  }
+}

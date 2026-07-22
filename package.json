@@ -1,0 +1,15 @@
+{
+  "name": "cytest-automation",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "CompassionCare Cypress Test Automation Suite",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "cypress run",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^13.0.0"
+  }
+}
