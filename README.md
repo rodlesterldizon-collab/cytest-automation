@@ -1,6 +1,6 @@
 # CompassionCare Automated Test Suite
 
-[![Cypress Tests](https://github.com/rodlesterldizon-collab/cytest-automation/actions/workflows/cypress.yml/badge.svg)](https://github.com/rodlesterldizon-collab/cytest-automation/actions/workflows/cypress.yml)
+[![Cypress Tests](https://img.shields.io/github/actions/workflow/status/rodlesterldizon-collab/cytest-automation/cypress.yml?branch=main&style=for-the-badge&logo=cypress&logoColor=white&label=Cypress%20Tests)](https://github.com/rodlesterldizon-collab/cytest-automation/actions/workflows/cypress.yml)
 [![Cypress](https://img.shields.io/badge/Cypress-13.17.0-17202C?style=for-the-badge&logo=cypress&logoColor=white)](https://www.cypress.io/)
 [![NodeJS](https://img.shields.io/badge/Node.js-v24.15.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)

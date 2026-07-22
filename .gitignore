@@ -3,3 +3,6 @@ cypress/screenshots/
 cypress/videos/
 cypress/downloads/
 .DS_Store
+.env.tests
+.env
+.env.*
