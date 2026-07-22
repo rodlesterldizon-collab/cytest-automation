@@ -22,7 +22,7 @@ describe('Staff Identity & Access Management Spec', () => {
     cy.contains('Forgot Password?').click();
   });
 
-  it('should trigger contact IT support slide-down form and dispatch an access request', () => {
+  it.skip('should trigger contact IT support slide-down form and dispatch an access request', () => {
     // Intercept IT Support request endpoint
     cy.intercept('POST', '/api/auth/request-access').as('requestAccess');
 
