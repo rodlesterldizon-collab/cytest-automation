@@ -7,9 +7,9 @@
   "scripts": {
     "test": "cypress run",
     "test:ui": "cypress open",
-    "test:cli": "cypress run --project ./cytest-automation",
-    "test:cli:chrome": "cypress run --project ./cytest-automation --browser chrome",
-    "test:cli:spec": "cypress run --project ./cytest-automation --spec 'cypress/e2e/pages/login.cy.js'",
+    "test:cli": "cypress run",
+    "test:cli:chrome": "cypress run --browser chrome",
+    "test:cli:spec": "cypress run --spec 'cypress/e2e/pages/login.cy.js'",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
