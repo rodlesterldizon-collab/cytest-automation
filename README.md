@@ -92,7 +92,7 @@ npm run test:cli:spec
 
 This repository includes an automated GitHub Actions CI/CD workflow configured at `.github/workflows/cypress.yml`. 
 
-It utilizes the pre-built official Cypress Docker container (`cypress/included:14.0.0-node24.15.0`) which has **Node.js v24.15.0** and Cypress pre-installed. This avoids container installation overhead on every workflow run.
+It utilizes the official pre-built Cypress Docker container (`cypress/included:13.17.0`) which has Cypress and Node.js pre-installed to avoid binary installation overhead during CI runs.
 
 ### `.github/workflows/cypress.yml` Configuration
 ```yaml
@@ -108,9 +108,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     
-    # Use the official Cypress image with Node v24.15.0 pre-installed
+    # Use official Cypress image matching installed Cypress version
     container:
-      image: cypress/included:14.0.0-node24.15.0
+      image: cypress/included:13.17.0
 
     steps:
       - name: Checkout repository

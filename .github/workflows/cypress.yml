@@ -10,9 +10,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     
-    # Use the official Cypress image with Node v24.15.0 pre-installed
+    # Use official Cypress image matching installed Cypress version
     container:
-      image: cypress/included:14.0.0-node24.15.0
+      image: cypress/included:13.17.0
 
     steps:
       - name: Checkout repository
