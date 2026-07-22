@@ -1,5 +1,13 @@
 # CompassionCare Automated Test Suite
 
+[![Cypress Tests](https://github.com/rodlesterldizon-collab/cytest-automation/actions/workflows/cypress.yml/badge.svg)](https://github.com/rodlesterldizon-collab/cytest-automation/actions/workflows/cypress.yml)
+[![Cypress](https://img.shields.io/badge/Cypress-13.17.0-17202C?style=for-the-badge&logo=cypress&logoColor=white)](https://www.cypress.io/)
+[![NodeJS](https://img.shields.io/badge/Node.js-v24.15.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
+[![Firebase](https://img.shields.io/badge/Firebase-Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![Google Cloud](https://img.shields.io/badge/Google_Cloud-IAM-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com/iam)
+
 A production-grade, end-to-end (E2E) and REST API test automation suite built for **CompassionCare**.
 
 > 💡 **Full-Stack Application & Test Suite Ownership**  
