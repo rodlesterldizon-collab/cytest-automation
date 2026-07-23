@@ -23,3 +23,10 @@ jobs:
 
       - name: Run Cypress tests
         run: npx cypress run
+        env:
+          CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL || 'https://compassion-care.ai.studio/' }}
+          CYPRESS_adminEmail: ${{ secrets.CYPRESS_ADMINEMAIL || 'dizonrl20@gmail.com' }}
+          CYPRESS_adminPassword: ${{ secrets.CYPRESS_ADMINPASSWORD || 'admin' }}
+          CYPRESS_employeeEmail: ${{ secrets.CYPRESS_EMPLOYEEEMAIL || 'wena@wen.ca' }}
+          CYPRESS_employeePassword: ${{ secrets.CYPRESS_EMPLOYEEPASSWORD || 'admin' }}
+          CYPRESS_MOCK_API: 'true'
