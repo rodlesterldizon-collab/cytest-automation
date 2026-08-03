@@ -18,11 +18,21 @@ A production-grade, end-to-end (E2E) and REST API test automation suite built fo
 
 ---
 
+## 🖥️ Application Under Test
+
+| Live Homepage | Admin Portal Dashboard |
+|:---:|:---:|
+| ![CompassionCare Live Homepage](docs/screenshots/homepage.jpg) | ![Admin Control Board](docs/screenshots/admin-portal.png) |
+| [compassion-care.ai.studio/](https://compassion-care.ai.studio/) | [compassion-care.ai.studio/admin](https://compassion-care.ai.studio/admin) |
+
+---
+
 ## 🚀 Key Highlights & Capabilities
 - **API-Driven Assertions**: Page-level specs (`homepage.cy.js`, `partners.cy.js`) fetch live content from the CMS Content Delivery API via the `setupCmsPage` helper before each test. All text assertions — headings, CTAs, labels, pills, and descriptions — are validated against the API response, not hardcoded strings. If copy changes in the CMS, the tests automatically reflect it without code changes.
 - **Helper & Utility Architecture**: Encapsulates common setup and CMS fetching into modular ES modules (`cypress/support/helpers.js`), keeping specs completely clean and free of mutable top-level variables.
 - **Lift & Run Locally**: Strictly environment-decoupled; can be targeted at local development, sandbox, preview, or production instances without code changes.
 - **Fast CI/CD & Automated Artifacts**: Powered by GitHub Actions using `cypress/included:13.17.0`. Automatically uploads HTML reports (`cypress-html-report`), failure screenshots (`cypress-screenshots`), and videos (`cypress-videos`) on every run.
+- **Responsive Viewport Coverage**: Dedicated mobile (iPhone-X, 375x812) and tablet (iPad-2, 768x1024) spec files for both homepage and partners pages validate layout integrity across all device breakpoints.
 - **Resilient Selectors**: Uses accessibility-first query strategies (`@testing-library/cypress`) rather than brittle CSS styling classes.
 
 ---
@@ -36,6 +46,8 @@ cytest-automation/
 ├── cypress.config.js             # Parses environment variables & configures Cypress
 ├── .env.tests                    # Target environment configuration & account credentials
 ├── CYPRESS_TEST_specification.md # Architectural test specifications & audit map
+├── docs/
+│   └── screenshots/              # Documentation assets (homepage, partners, CI, reports)
 ├── package.json                  # Dependencies & test runner CLI/UI scripts
 └── cypress/
     ├── support/
@@ -43,7 +55,8 @@ cytest-automation/
     │   ├── commands.js           # Custom command bindings (e.g., cy.loginProgrammatic)
     │   └── helpers.js            # Reusable ES module helper functions (e.g., setupCmsPage, fetchCmsContent)
     ├── fixtures/
-    │   └── testData.json         # Standard accounts and dynamic payload blueprints
+    │   ├── homeData.json         # Consultation form input samples (desktop, mobile, tablet, invalid, incomplete)
+    │   └── partnersData.json     # Partnership inquiry input samples (desktop, mobile, tablet, invalid, incomplete)
     └── e2e/
         ├── api/                  # Pure REST API endpoint & schema contract tests
         ├── global/               # Navbar & Footer component tests
@@ -183,6 +196,20 @@ To optimize pipeline speed, the workflow runs inside the official pre-built Dock
 
 CMS credentials (`CYPRESS_access_token`, `CYPRESS_space_id`, `CYPRESS_content_api_base_url`) are stored as **GitHub Secrets/Variables** and injected at runtime — no credentials are committed to the repository.
 
+### Cypress Test Runner — Live Results
+
+| CMS API Contract & Schema Specs | Form Submission Validation Spec |
+|:---:|:---:|
+| ![CMS API Tests Running](docs/screenshots/cypress-api-run.png) | ![Form Validation Tests](docs/screenshots/cypress-form-validation.png) |
+| `content.cy.js` · `content.schema.cy.js` — 44 assertions ✅ | `form-submission.cy.js` — 6 assertions ✅ |
+
+| Homepage & Global Component Specs |
+|:---:|
+| ![Homepage and Global Specs](docs/screenshots/cypress-ui-run.png) |
+| `homepage.cy.js` (6 passing) · `navbar.cy.js` (4 passing) · `footer.cy.js` (3 passing) ✅ |
+
+> [View All CI Runs →](https://github.com/rodlesterldizon-collab/cytest-automation/actions)
+
 ### Artifacts Captured & Uploaded on Every CI Run:
 1. 📄 **`cypress-html-report`**: Interactive Mochawesome HTML report (`cypress/reports/index.html`).
 2. 📸 **`cypress-screenshots`**: Captured PNG failure screenshots (`cypress/screenshots`).
@@ -194,7 +221,9 @@ CMS credentials (`CYPRESS_access_token`, `CYPRESS_space_id`, `CYPRESS_content_ap
 
 - **Clean Helper Functions (`setupCmsPage`)**: Uses modular ES module imports (`cypress/support/helpers.js`) to handle API requests and route navigation in a single line, retrieving data via thread-safe Cypress aliases (`cy.get('@home')`) without mutable global variables (`let home`).
 - **API-Driven Content Assertions**: Page specs call the CMS Content Delivery API in `beforeEach` and alias the response. All `have.text` / `contain.text` assertions use live API data — zero hardcoded copy strings.
+- **Fixture-Driven Test Data**: Form input samples (valid, invalid, incomplete) for all pages are centralized in `cypress/fixtures/homeData.json` and `partnersData.json` — referenced by viewport context (`desktop`, `mobile`, `tablet`).
 - **Explicit Per-Element Testing**: Service cards, bento grid cards, highlight pills, and list items are tested individually (no programmatic loops) for clear failure isolation and readable test output.
+- **Responsive Viewport Testing**: Dedicated `*.mobile.cy.js` (375x812) and `*.tablet.cy.js` (768x1024) spec files validate layout integrity across device breakpoints using `cy.viewport()`.
 - **Programmatic Session Caching (`cy.session()`)**: Bypasses slow UI logins for authenticated test setup, reducing execution time by up to 85%.
 - **Accessibility-First Selectors (`@testing-library/cypress`)**: Uses `cy.findByRole()` and `cy.findByLabelText()` to keep tests decoupled from CSS styling or Tailwind class refactors.
 - **Flexible Waiting Strategies**: Employs dynamic polling (`fluentWait`) and optional explicit delays (`explicitWait`) rather than brittle fixed sleeps.
