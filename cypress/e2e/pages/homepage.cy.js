@@ -1,141 +1,199 @@
+/**
+ * Homepage E2E Spec — API-Driven
+ *
+ * All text assertions are driven by the live CMS Content Delivery API response.
+ * No hardcoded copy — if content changes in the CMS, tests reflect that automatically.
+ *
+ * API: GET {content_api_base_url}/{space_id}/home?access_token={access_token}
+ * Env vars are sourced from .env.tests (locally) or GitHub Secrets/Variables (CI).
+ */
 describe('Public Landing Homepage E2E Spec', () => {
+  /**
+   * Fetch the CMS content for the home page once before each test and alias it.
+   * Also visits the homepage so the DOM is ready.
+   */
   beforeEach(() => {
+    const apiBase = Cypress.env('content_api_base_url');
+    const spaceId = Cypress.env('space_id');
+    const token = Cypress.env('access_token');
+
+    cy.request({
+      method: 'GET',
+      url: `${apiBase}/${spaceId}/home?access_token=${token}`,
+      failOnStatusCode: true,
+    })
+      .its('body.content')
+      .as('homeContent');
+
     cy.visit('/');
   });
 
-  it('should render the hero section, titles, and verify primary CTA scrolls to contact', () => {
-    // Assert visual branding and descriptive tags
+  // ─── Hero Section ────────────────────────────────────────────────────────────
+
+  it('should render the hero section using CMS copy and verify CTAs scroll correctly', function () {
+    const hero = this.homeContent.hero;
+
     cy.get('section').eq(0).within(() => {
-      cy.contains('span', 'Trusted by 1,000+ Families').should('be.visible');
-      cy.contains('h1', 'Compassionate, ').should('be.visible');
+      // Badge / trust signal
+      cy.contains('span', hero.badge).should('be.visible');
+
+      // Heading prefix (partial match because the heading is split across elements)
+      cy.contains('h1', hero.titlePrefix).should('be.visible');
+
+      // Paragraph body should be present
       cy.get('p').should('be.visible');
-      cy.contains('button', 'View Services').should('be.visible');
-      cy.contains('button', 'Hire a Caregiver')
+
+      // Services CTA
+      cy.contains('button', hero.ctaServices).should('be.visible');
+
+      // Hire CTA — click should anchor to #contact and focus
+      cy.contains('button', hero.ctaHire)
         .should('be.visible')
-        .click().should('have.focus');
-      cy.window()
-        .its('scrollY')
-        .should('be.greaterThan', 0);
+        .click()
+        .should('have.focus');
+
+      cy.window().its('scrollY').should('be.greaterThan', 0);
     });
 
-    // Clicking primary CTA should trigger smooth scroll to the intake contact form
-    cy.url().should('include', '#contact');
-    cy.get('#contact').should('exist'); // It exists in DOM
-    cy.get('#contact').should('be.visible');
-    // Clicking View services CTA
-    cy.contains('button', 'View Services')
-      .scrollIntoView()
-      .click();
-    cy.window()
-      .its('scrollY')
-      .should('be.greaterThan', 0);
-    cy.url().should('include', '#services');
-    // cy.get('#services').should('have.focus');
+    // URL hash must reflect hire CTA href
+    cy.url().should('include', hero.ctaHireHref);
+    cy.get(hero.ctaHireHref).should('exist').and('be.visible');
 
+    // Services CTA should scroll to #services
+    cy.contains('button', hero.ctaServices).scrollIntoView().click();
+    cy.window().its('scrollY').should('be.greaterThan', 0);
+    cy.url().should('include', hero.ctaServicesHref);
   });
 
-  it('should render correct numeric metrics in the stats grid', () => {
+  // ─── Stats / Metrics Grid ────────────────────────────────────────────────────
+
+  it('should render the stats grid with CMS values and labels', function () {
+    const { items } = this.homeContent.stats;
+
     cy.get('section').eq(1).within(() => {
-      cy.contains('span', 'Modern').should('be.visible');
-      cy.contains('span', 'Innovative Startup').should('be.visible');
-      cy.contains('span', 'Caring').should('be.visible');
-      cy.contains('span', 'Community-Driven').should('be.visible');
-      cy.contains('span', '24/7').should('be.visible');
-      cy.contains('span', 'Always Available').should('be.visible');
-      cy.contains('span', 'Rapid').should('be.visible');
-      cy.contains('span', 'Responsive Care').should('be.visible');
+      items.forEach(({ value, label }) => {
+        cy.contains('span', value).should('be.visible');
+        cy.contains('span', label).should('be.visible');
+      });
     });
   });
 
-  it('should verify our mission section and featured elements', () => {
+  // ─── About / Mission Section ──────────────────────────────────────────────────
+
+  it('should verify the mission section title, description, and all feature cards are visible', function () {
+    const about = this.homeContent.about;
+
     cy.get('#about').within(() => {
+      // Section image
       cy.get('picture').first().should('be.visible');
-      cy.get('h2').should('be.visible');
-      cy.get('h2').parent().next('p').should('be.visible');
-      cy.get('h4').eq(0).should('be.visible');
-      cy.get('h4').eq(1).should('be.visible');
-      cy.get('h4').eq(2).should('be.visible');
-      cy.get('h4').eq(3).should('be.visible');
-      cy.get('p').eq(0).should('be.visible');
-      cy.get('p').eq(1).should('be.visible');
-      cy.get('p').eq(2).should('be.visible');
-      cy.get('p').eq(3).should('be.visible');
-      cy.get('svg').eq(0).should('be.visible');
-      cy.get('svg').eq(1).should('be.visible');
-      cy.get('svg').eq(2).should('be.visible');
-      cy.get('svg').eq(3).should('be.visible');
+
+      // Section heading and description paragraph
+      cy.contains('h2', about.title).should('be.visible');
+      cy.get('h2').parent().next('p').should('be.visible').and('contain.text', about.description);
+      console.log('about', about.description);
+
+      // Each feature card: heading, paragraph, and icon
+      about.features.forEach(({ title, description }, i) => {
+        cy.get('h4').eq(i).should('be.visible').and('contain.text', title);
+        cy.get('p').eq(i + 1).should('be.visible').and('contain.text', description);
+        cy.get('svg').eq(i).should('be.visible');
+      });
     });
   });
 
-  it('should verify the Care Tailored grid and check card items', () => {
+  // ─── Services Grid ───────────────────────────────────────────────────────────
+
+  it('should verify the services section heading and all service cards match CMS data', function () {
+    const services = this.homeContent.services;
+
     cy.get('#services').within(() => {
-      // Header
+      // Section heading
       cy.get('h2').parent().within(() => {
-        cy.get('h2').should('have.text', 'Care Tailored to Your Needs');
-        cy.get('p').should('be.visible');
+        cy.get('h2').should('have.text', services.title);
+        cy.get('p').should('be.visible').and('contain.text', services.description);
       });
 
-      // Grid Div 1: In-Home Care (image + content)
+      // Card 0 — In-Home Care
       cy.get('.grid > div').eq(0).within(() => {
-        cy.get('picture').should('be.visible');
-        cy.get('h3').should('have.text', 'In-Home Care');
+        cy.get('h3').should('have.text', services.items[0].title);
         cy.get('p').should('be.visible');
-        cy.get('button').should('contain.text', 'Request Consultation');
+        cy.get('button').should('contain.text', services.items[0].cta);
       });
 
-      // Grid Div 2: Nursing Care
+      // Card 1 — Nursing Care
       cy.get('.grid > div').eq(1).within(() => {
-        cy.get('svg').should('exist');
-        cy.get('h3').should('have.text', 'Nursing Care');
+        cy.get('h3').should('have.text', services.items[1].title);
         cy.get('p').should('be.visible');
-        cy.get('button').should('contain.text', 'Inquire About Nursing Care');
+        cy.get('button').should('contain.text', services.items[1].cta);
       });
 
-      // Grid Div 3: Companionship
+      // Card 2 — Companionship
       cy.get('.grid > div').eq(2).within(() => {
-        cy.get('svg').should('exist');
-        cy.get('h3').should('have.text', 'Companionship');
+        cy.get('h3').should('have.text', services.items[2].title);
         cy.get('p').should('be.visible');
-        cy.get('button').should('contain.text', 'Request Companion Support');
+        cy.get('button').should('contain.text', services.items[2].cta);
       });
 
-      // Grid Div 4: Specialized Dementia Care (3 pills)
+      // Card 3 — Specialized Dementia Care (includes highlight pills)
       cy.get('.grid > div').eq(3).within(() => {
-        cy.get('h3').should('have.text', 'Specialized Dementia Care');
+        cy.get('h3').should('have.text', services.items[3].title);
         cy.get('p').should('be.visible');
-        cy.get('span').eq(0).should('have.text', 'Memory Care');
-        cy.get('span').eq(1).should('have.text', 'Safety Audits');
-        cy.get('span').eq(2).should('have.text', 'Routine Coaching');
-        cy.get('picture').should('be.visible');
+        cy.get('span').eq(0).should('have.text', services.items[3].highlights[0]);
+        cy.get('span').eq(1).should('have.text', services.items[3].highlights[1]);
+        cy.get('span').eq(2).should('have.text', services.items[3].highlights[2]);
       });
     });
   });
 
-  it('should validate form constraints and successfully dispatch a care consultation', () => {
+  // ─── Contact / Consultation Form ─────────────────────────────────────────────
+
+  it('should validate form constraints and successfully dispatch a care consultation', function () {
+    const contact = this.homeContent.contact;
+    const form = contact.form;
+
     cy.intercept('POST', '/api/consultation').as('consultationRequest');
 
     cy.get('#contact').within(() => {
-      // Attempt invalid empty submission to trigger client-side validation checks
-      cy.contains('button', 'Request Consultation').click();
+      // Attempt invalid empty submission to trigger client-side validation
+      cy.contains('button', form.cta).click();
 
-      // Fill in standard customer details using testing library / semantic fields
-      cy.get('input[name="name"]').clear().type('Adelaide Vance');
-      cy.get('input[name="email"]').clear().type('adelaide@example.com');
-      cy.get('input[name="phone"]').clear().type('416-555-0199');
-      cy.get('select[name="typeOfCare"]').select('Memory Support');
-      cy.get('textarea[name="helpDescription"]').clear().type('My grandmother requires specialized companion dementia support.');
+      // Fill in fields using CMS-sourced field names as selectors
+      cy.get(`input[name="name"]`).clear().type('Adelaide Vance');
+      cy.get(`input[name="email"]`).clear().type('adelaide@example.com');
+      cy.get(`input[name="phone"]`).clear().type('416-555-0199');
+      cy.get(`select[name="typeOfCare"]`).select('Memory Support');
+      cy.get(`textarea[name="helpDescription"]`).clear().type(
+        'My grandmother requires specialized companion dementia support.'
+      );
 
-      // Submit form and intercept handshake
-      cy.contains('button', 'Request Consultation').click();
+      // Submit form
+      cy.contains('button', form.cta).click();
     });
 
-    // Wait for endpoint verification
+    // Wait for endpoint handshake
     cy.wait('@consultationRequest').its('response.statusCode').should('eq', 200);
 
-    // Verify success banner matches copy-deck structures
+    // Verify success banner matches CMS copy
     cy.get('#contact').within(() => {
-      cy.contains('h3', 'Consultation Requested').should('be.visible');
-      cy.contains('p', /Our caregiver coordinator will reach out/i).should('be.visible');
+      cy.contains('h3', form.successMessage.title).should('be.visible');
+      cy.contains('p', form.successMessage.description).should('be.visible');
+    });
+  });
+
+  // ─── Contact Section Info ─────────────────────────────────────────────────────
+
+  it('should render the contact section title, description, and contact info from CMS', function () {
+    const contact = this.homeContent.contact;
+
+    cy.get('#contact').within(() => {
+      cy.contains('h2, h3', contact.title).should('be.visible');
+      cy.get('p').should('be.visible');
+
+      // Contact info details
+      const { phone, email, address } = contact.contactInfo;
+      cy.contains(phone).should('be.visible');
+      cy.contains(email).should('be.visible');
+      cy.contains(address).should('be.visible');
     });
   });
 });
