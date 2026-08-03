@@ -19,6 +19,8 @@ describe('Administrative Portal Management Page Spec', () => {
     cy.loginProgrammatic(credentials.email, credentials.password);
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should support staff registry auditing and employee state switches', () => {
     cy.visit('/admin');
 
@@ -38,6 +40,8 @@ describe('Administrative Portal Management Page Spec', () => {
       });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should assign, list, and delete client shifts through the master scheduling interface', () => {
     cy.visit('/admin');
 
@@ -90,6 +94,8 @@ describe('Administrative Portal Management Page Spec', () => {
     cy.contains('Arthur Pendragon').should('not.exist');
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should support auditing of caregiver leave requests and updating approval states', () => {
     cy.visit('/admin');
 
@@ -100,6 +106,8 @@ describe('Administrative Portal Management Page Spec', () => {
     cy.contains('Leave Approvals').should('be.visible');
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should respond reactively to live Feature Flag visibility adjustments', () => {
     cy.visit('/admin');
 

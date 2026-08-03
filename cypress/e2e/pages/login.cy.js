@@ -22,6 +22,8 @@ describe('Staff Identity & Access Management Spec', () => {
     cy.contains('Forgot Password?').click();
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should trigger contact IT support slide-down form and dispatch an access request', () => {
     // Intercept IT Support request endpoint
     cy.intercept('POST', '/api/auth/request-access').as('requestAccess');
@@ -45,9 +47,10 @@ describe('Staff Identity & Access Management Spec', () => {
     cy.contains(/Request Submitted/i).should('be.visible');
   });
 
-  it('SSO Google Multi-Environment Authentication - Future Phase', () => {
-    // This is marked skipped as mandated by the v10 SDET Spec.
-    // Google SSO popup integrations are evaluated via manual cycles to prevent secure domain handshaking interruptions.
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
+  it.skip('SSO Google Multi-Environment Authentication - Future Phase', () => {
+
     cy.window().then((win) => {
       cy.stub(win, 'open').as('googleRedirectAttempt');
     });

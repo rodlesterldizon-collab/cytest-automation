@@ -62,7 +62,7 @@ Cypress.Commands.add('loginViaUI', (email, password) => {
  * @param {number} timeoutMs - Max timeout in milliseconds before throwing an error (default: 10000)
  */
 Cypress.Commands.add('fluentWait', (selector, assertion = 'be.visible', timeoutMs = 10000) => {
-  cy.log(`[SDET Fluent Wait] Waiting up to ${timeoutMs}ms for '${selector}' to '${assertion}'`);
+  cy.log(`[Fluent Wait] Waiting up to ${timeoutMs}ms for '${selector}' to '${assertion}'`);
   return cy.get(selector, { timeout: timeoutMs }).should(assertion);
 });
 
@@ -74,7 +74,7 @@ Cypress.Commands.add('fluentWait', (selector, assertion = 'be.visible', timeoutM
  * @param {number} ms - Milliseconds to pause execution
  */
 Cypress.Commands.add('explicitWait', (ms) => {
-  cy.log(`[SDET Explicit Wait] Pausing execution for ${ms}ms`);
+  cy.log(`[Explicit Wait] Pausing execution for ${ms}ms`);
   return cy.wait(ms);
 });
 

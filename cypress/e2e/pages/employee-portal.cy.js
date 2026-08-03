@@ -64,6 +64,8 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
     cy.findByRole('button', { name: /complete/i }).should('be.disabled');
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should prompt an Inactivity Security Alert warning at the idle threshold boundary and support resets', () => {
     // Use cy.clock to manipulate system times programmatically (no hardcoded waits!)
     cy.clock();
@@ -82,6 +84,8 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
     cy.contains('Inactivity Security Alert').should('not.exist');
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should force automated logout and purge session state if the countdown warning is fully ignored', () => {
     cy.clock();
 

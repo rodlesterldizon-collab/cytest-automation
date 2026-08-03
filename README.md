@@ -57,10 +57,14 @@ cytest-automation/
 ### 🌐 1. User Interface (UI) Specs (`cypress/e2e/pages/`)
 | Spec File | Area Tested | Key Validations & Scenarios |
 | :--- | :--- | :--- |
-| `login.cy.js` | Identity & Access | Form field inputs, modal dialogs, IT Support intake (*skipped due to rate-limiting*), Google SSO integration |
-| `homepage.cy.js` | Landing & Services | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API via `setupCmsPage('home', '/')` |
-| `partners.cy.js` | B2B Partnerships | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API via `setupCmsPage('corporate', '/partners')` |
-| `admin-portal.cy.js` | Admin Dashboard | Dashboard rendering, employee roster management, shift scheduling, leave auditing (*skipped*) |
+| `login.cy.js` | Identity & Access | Form field inputs, modal dialogs, IT Support intake, Google SSO integration |
+| `homepage.cy.js` | Landing & Services (Desktop) | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API via `setupCmsPage('home', '/')` |
+| `homepage.mobile.cy.js` | Landing & Services (Mobile) | iPhone-X viewport (375x812) layout validation, mobile stacked grids, touch targets, and consultation form |
+| `homepage.tablet.cy.js` | Landing & Services (Tablet) | iPad-2 viewport (768x1024) layout validation, 2x2 stats grid, tablet component sizing, and consultation form |
+| `partners.cy.js` | B2B Partnerships (Desktop) | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API via `setupCmsPage('corporate', '/partners')` |
+| `partners.mobile.cy.js` | B2B Partnerships (Mobile) | iPhone-X viewport (375x812) layout validation, stacked bento cards, ROI calculator, and inquiry form |
+| `partners.tablet.cy.js` | B2B Partnerships (Tablet) | iPad-2 viewport (768x1024) layout validation, tablet bento grid, ROI calculator, and inquiry form |
+| `admin-portal.cy.js` | Admin Dashboard | Dashboard rendering, employee roster management, shift scheduling, leave auditing |
 | `employee-portal.cy.js` | Caregiver Portal | Shift schedule view, interactive clock-in/clock-out timecard, caregiver profile details |
 
 ### 🧩 2. Global Component Specs (`cypress/e2e/global/`)
@@ -72,9 +76,9 @@ cytest-automation/
 ### 🔌 3. REST API Contract Specs (`cypress/e2e/api/`)
 | Spec File | Area Tested | Key Validations & Scenarios |
 | :--- | :--- | :--- |
-| `auth.cy.js` | Authentication API | `POST /api/auth/login` credentials check, `GET /api/auth/me` session check, 401 error handling (*skipped*) |
-| `admin.cy.js` | Admin Control API | `POST /api/admin/add-employee`, employee status toggles, schedule creation & deletion (*skipped*) |
-| `portal.cy.js` | Employee Portal API | `GET /api/portal/schedules`, timecard `clock-in`/`clock-out`, leave request submission (*skipped*) |
+| `auth.cy.js` | Authentication API | `POST /api/auth/login` credentials check, `GET /api/auth/me` session check, 401 error handling |
+| `admin.cy.js` | Admin Control API | `POST /api/admin/add-employee`, employee status toggles, schedule creation & deletion |
+| `portal.cy.js` | Employee Portal API | `GET /api/portal/schedules`, timecard `clock-in`/`clock-out`, leave request submission |
 | `content.cy.js` | CMS Content API | `GET /api/content/{spaceId}/{pageId}` contract validation for `home` and `corporate` page payloads |
 | `content.schema.cy.js` | AJV Schema & Security | AJV JSON Schema validation for form fields, HTTP 401/403 auth checks, 404 handling, response duration (<3s) |
 | `form-submission.cy.js` | Form Input Validation | `POST /api/consultation` and `POST /api/partnership` field validations (valid 200, invalid email format rejection 400/422, missing required fields 400/422) |

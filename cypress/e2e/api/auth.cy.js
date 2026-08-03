@@ -13,6 +13,8 @@ describe('Backend Identity & Auth API Contract Spec', () => {
     };
   };
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should validate administrator credentials and set the secure HttpOnly cookie', () => {
     // Clear cookies before verifying login behavior
     cy.clearCookies();
@@ -32,6 +34,8 @@ describe('Backend Identity & Auth API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should reject invalid credentials and return safe error parameters', () => {
     cy.request({
       method: 'POST',
@@ -48,6 +52,8 @@ describe('Backend Identity & Auth API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should verify the active session safely via the me route without leaking secrets', () => {
     // Authenticate programmatically first
     const credentials = getAdminCredentials();
@@ -64,6 +70,8 @@ describe('Backend Identity & Auth API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should log out programmatically and purge browser sessions', () => {
     // Authenticate first
     const credentials = getAdminCredentials();

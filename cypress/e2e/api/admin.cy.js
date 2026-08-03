@@ -46,6 +46,8 @@ describe('Backend Administrative Control API Spec', () => {
     cy.loginProgrammatic(credentials.email, credentials.password);
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow administrators to register, fetch, deactivate, reactivate and delete employees', () => {
     // 1. Add employee
     cy.request({
@@ -124,6 +126,8 @@ describe('Backend Administrative Control API Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow administrators to assign, schedule, and permanently delete client shifts', () => {
     const shiftId = `shift-test-${Math.random().toString(36).substring(2, 9)}`;
     const mockShift = {
@@ -186,6 +190,8 @@ describe('Backend Administrative Control API Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow administrators to audit and update caregiver leave requests', () => {
     // 1. Submit a leave request as a caregiver first to ensure there is a pending request on the database
     const caregiver = getCaregiverCredentials();

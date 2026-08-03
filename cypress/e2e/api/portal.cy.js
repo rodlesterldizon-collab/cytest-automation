@@ -31,6 +31,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     cy.loginProgrammatic(credentials.email, credentials.password);
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow caregivers to read their own assigned schedules', () => {
     cy.request({
       method: 'GET',
@@ -47,6 +49,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should prevent non-admins from reading other employees schedules', () => {
     cy.request({
       method: 'GET',
@@ -60,6 +64,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow caregivers to submit leave requests programmatically', () => {
     const leaveId = `leave-test-${Math.random().toString(36).substring(2, 9)}`;
     const mockLeaveRequest = {
@@ -95,6 +101,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should allow caregivers to submit clock actions for their scheduled shifts', () => {
     // 1. Fetch Elena's schedules to find a valid schedule ID to act on
     cy.request({
@@ -139,6 +147,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should reject unauthorized actions on other employees clockings', () => {
     cy.request({
       method: 'POST',
@@ -156,6 +166,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should isolate privileges by denying employees access to the registry list', () => {
     cy.request({
       method: 'GET',
@@ -168,6 +180,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
     });
   });
 
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should isolate privileges by denying employees access to add personnel', () => {
     cy.request({
       method: 'POST',
@@ -190,6 +204,8 @@ describe('Caregiver Operational Portal API Contract Spec', () => {
 });
 
 describe('Rate Limiter Protection API Spec', () => {
+  // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
+  // Can be run in limited fashion or against a dedicated environment.
   it.skip('should enforce 429 status code on excessive login requests to block rapid automated attacks', () => {
     // Clear cookies & state to ensure a fresh clean IP rate limiter count
     cy.clearCookies();

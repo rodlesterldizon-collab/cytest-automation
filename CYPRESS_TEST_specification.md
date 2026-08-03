@@ -1,4 +1,4 @@
-# CYPRESS TEST AUTOMATION SPECIFICATION (SDET v10)
+# CYPRESS TEST AUTOMATION SPECIFICATION (v10)
 
 This document is the absolute source of truth and configuration engine blueprint for creating, executing, or modifying Cypress E2E and API tests for the **CompassionCare** application. All automated test generation must adhere strictly to these principles.
 
