@@ -4,11 +4,12 @@ import { setupCmsPage } from '../../support/helpers';
  * Corporate Partnerships Page E2E Spec — API-Driven
  *
  * Content is fetched and aliased using helper `setupCmsPage('corporate', '/partners')`.
- * No hardcoded copy — if content changes in the CMS, tests reflect that automatically.
+ * Form input samples are sourced from `cypress/fixtures/partnersData.json`.
  */
 describe('Corporate Partnerships Spec', () => {
   beforeEach(() => {
     setupCmsPage('corporate', '/partners');
+    cy.fixture('partnersData').as('partnersData');
   });
 
   // ─── Hero Section ─────────────────────────────────────────────────────────────
@@ -175,22 +176,25 @@ describe('Corporate Partnerships Spec', () => {
 
   it('should dispatch corporate partnership intake inquiries successfully', () => {
     cy.get('@corporate').then((corp) => {
-      const { inquiry } = corp;
+      cy.get('@partnersData').then((partnersData) => {
+        const { inquiry } = corp;
+        const inputData = partnersData.inquiryForm.desktop;
 
-      cy.intercept('POST', '/api/partnership').as('partnershipInquiry');
+        cy.intercept('POST', '/api/partnership').as('partnershipInquiry');
 
-      cy.get('input[name="name"]').clear().type('Sunnybrook Senior Living');
-      cy.get('input[name="email"]').clear().type('partners@sunnybrook.com');
-      cy.get('select[name="orgType"]').select('Assisted Living Facility');
-      cy.get('textarea[name="needs"]').clear().type('Looking to license CompassionCare tools for 40 resident memory suites.');
+        cy.get('input[name="name"]').clear().type(inputData.name);
+        cy.get('input[name="email"]').clear().type(inputData.email);
+        cy.get('select[name="orgType"]').select(inputData.orgType);
+        cy.get('textarea[name="needs"]').clear().type(inputData.needs);
 
-      cy.contains('button', inquiry.cta).click();
+        cy.contains('button', inquiry.cta).click();
 
-      cy.wait('@partnershipInquiry').its('response.statusCode').should('eq', 200);
+        cy.wait('@partnershipInquiry').its('response.statusCode').should('eq', 200);
 
-      // Verify successful feedback
-      cy.contains('Inquiry Received').should('be.visible');
-      cy.contains(/Our partnerships director is reviewing your staffing/i).should('be.visible');
+        // Verify successful feedback
+        cy.contains('Inquiry Received').should('be.visible');
+        cy.contains(/Our partnerships director is reviewing your staffing/i).should('be.visible');
+      });
     });
   });
 

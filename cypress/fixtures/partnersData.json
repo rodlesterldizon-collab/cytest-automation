@@ -1,0 +1,31 @@
+{
+  "inquiryForm": {
+    "desktop": {
+      "name": "Sunnybrook Senior Living",
+      "email": "partners@sunnybrook.com",
+      "orgType": "Assisted Living Facility",
+      "needs": "Looking to license CompassionCare tools for 40 resident memory suites."
+    },
+    "mobile": {
+      "name": "Mobile Senior Care",
+      "email": "mobile@seniorcare.com",
+      "orgType": "Assisted Living Facility",
+      "needs": "Mobile partnership request text."
+    },
+    "tablet": {
+      "name": "Tablet Senior Care",
+      "email": "tablet@seniorcare.com",
+      "orgType": "Assisted Living Facility",
+      "needs": "Tablet partnership request text."
+    },
+    "invalidEmail": {
+      "name": "Sunnybrook Senior Living",
+      "email": "not-an-email",
+      "orgType": "Assisted Living Facility",
+      "needs": "Looking to license CompassionCare tools for 40 resident memory suites."
+    },
+    "incomplete": {
+      "needs": "Missing name and organization email."
+    }
+  }
+}

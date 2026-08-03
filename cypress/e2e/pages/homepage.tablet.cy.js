@@ -4,11 +4,13 @@ import { setupCmsPage } from '../../support/helpers';
  * Homepage Tablet Viewport E2E Spec — API-Driven (iPad-2: 768x1024)
  *
  * Validates responsive rendering, 2-column grid layouts, touch controls, and CMS copy integrity on tablet devices.
+ * Form input samples are sourced from `cypress/fixtures/homeData.json`.
  */
 describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
   beforeEach(() => {
     cy.viewport('ipad-2');
     setupCmsPage('home', '/');
+    cy.fixture('homeData').as('homeData');
   });
 
   // ─── Tablet Hero Section ──────────────────────────────────────────────────────
@@ -77,22 +79,26 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   it('should allow typing and dispatching consultation form on tablet', () => {
     cy.get('@home').then((home) => {
-      const { form } = home.contact;
-      cy.intercept('POST', '/api/consultation').as('consultationRequest');
+      cy.get('@homeData').then((homeData) => {
+        const { form } = home.contact;
+        const inputData = homeData.consultationForm.tablet;
 
-      cy.get('#contact').scrollIntoView().within(() => {
-        cy.get('input[name="name"]').clear().type('Tablet Test User');
-        cy.get('input[name="email"]').clear().type('tablet@example.com');
-        cy.get('input[name="phone"]').clear().type('416-555-0199');
-        cy.get('select[name="typeOfCare"]').select('Memory Support');
-        cy.get('textarea[name="helpDescription"]').clear().type('Tablet test inquiry text.');
-        cy.contains('button', form.cta).click();
-      });
+        cy.intercept('POST', '/api/consultation').as('consultationRequest');
 
-      cy.wait('@consultationRequest').its('response.statusCode').should('eq', 200);
+        cy.get('#contact').scrollIntoView().within(() => {
+          cy.get('input[name="name"]').clear().type(inputData.name);
+          cy.get('input[name="email"]').clear().type(inputData.email);
+          cy.get('input[name="phone"]').clear().type(inputData.phone);
+          cy.get('select[name="typeOfCare"]').select(inputData.typeOfCare);
+          cy.get('textarea[name="helpDescription"]').clear().type(inputData.helpDescription);
+          cy.contains('button', form.cta).click();
+        });
 
-      cy.get('#contact').within(() => {
-        cy.contains('h3', form.successMessage.title).should('be.visible');
+        cy.wait('@consultationRequest').its('response.statusCode').should('eq', 200);
+
+        cy.get('#contact').within(() => {
+          cy.contains('h3', form.successMessage.title).should('be.visible');
+        });
       });
     });
   });

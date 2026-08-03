@@ -1,0 +1,35 @@
+{
+  "consultationForm": {
+    "desktop": {
+      "name": "Adelaide Vance",
+      "email": "adelaide@example.com",
+      "phone": "416-555-0199",
+      "typeOfCare": "Memory Support",
+      "helpDescription": "My grandmother requires specialized companion dementia support."
+    },
+    "mobile": {
+      "name": "Mobile Test User",
+      "email": "mobile@example.com",
+      "phone": "416-555-0199",
+      "typeOfCare": "Memory Support",
+      "helpDescription": "Mobile test inquiry text."
+    },
+    "tablet": {
+      "name": "Tablet Test User",
+      "email": "tablet@example.com",
+      "phone": "416-555-0199",
+      "typeOfCare": "Memory Support",
+      "helpDescription": "Tablet test inquiry text."
+    },
+    "invalidEmail": {
+      "name": "Adelaide Vance",
+      "email": "invalid-email-format",
+      "phone": "416-555-0199",
+      "typeOfCare": "Memory Support",
+      "helpDescription": "Specialized companion dementia support request."
+    },
+    "incomplete": {
+      "phone": "416-555-0199"
+    }
+  }
+}

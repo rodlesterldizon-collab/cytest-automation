@@ -4,11 +4,13 @@ import { setupCmsPage } from '../../support/helpers';
  * Corporate Partnerships Mobile Viewport E2E Spec — API-Driven (iPhone-X: 375x812)
  *
  * Validates B2B partner landing, bento cards, ROI calculator, and inquiry form on mobile devices.
+ * Form input samples are sourced from `cypress/fixtures/partnersData.json`.
  */
 describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
   beforeEach(() => {
     cy.viewport('iphone-x');
     setupCmsPage('corporate', '/partners');
+    cy.fixture('partnersData').as('partnersData');
   });
 
   // ─── Mobile Hero Section ──────────────────────────────────────────────────────
@@ -78,18 +80,22 @@ describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
 
   it('should submit corporate partnership inquiry on mobile screen', () => {
     cy.get('@corporate').then((corp) => {
-      const { inquiry } = corp;
-      cy.intercept('POST', '/api/partnership').as('partnershipInquiry');
+      cy.get('@partnersData').then((partnersData) => {
+        const { inquiry } = corp;
+        const inputData = partnersData.inquiryForm.mobile;
 
-      cy.get('input[name="name"]').clear().type('Mobile Senior Care');
-      cy.get('input[name="email"]').clear().type('mobile@seniorcare.com');
-      cy.get('select[name="orgType"]').select('Assisted Living Facility');
-      cy.get('textarea[name="needs"]').clear().type('Mobile partnership request text.');
+        cy.intercept('POST', '/api/partnership').as('partnershipInquiry');
 
-      cy.contains('button', inquiry.cta).click();
+        cy.get('input[name="name"]').clear().type(inputData.name);
+        cy.get('input[name="email"]').clear().type(inputData.email);
+        cy.get('select[name="orgType"]').select(inputData.orgType);
+        cy.get('textarea[name="needs"]').clear().type(inputData.needs);
 
-      cy.wait('@partnershipInquiry').its('response.statusCode').should('eq', 200);
-      cy.contains('Inquiry Received').should('be.visible');
+        cy.contains('button', inquiry.cta).click();
+
+        cy.wait('@partnershipInquiry').its('response.statusCode').should('eq', 200);
+        cy.contains('Inquiry Received').should('be.visible');
+      });
     });
   });
 });

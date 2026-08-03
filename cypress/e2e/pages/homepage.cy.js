@@ -4,11 +4,12 @@ import { setupCmsPage } from '../../support/helpers';
  * Homepage E2E Spec — API-Driven
  *
  * Content is fetched and aliased using helper `setupCmsPage('home', '/')`.
- * No hardcoded copy — if content changes in the CMS, tests reflect that automatically.
+ * Form input samples are sourced from `cypress/fixtures/homeData.json`.
  */
 describe('Public Landing Homepage E2E Spec', () => {
   beforeEach(() => {
     setupCmsPage('home', '/');
+    cy.fixture('homeData').as('homeData');
   });
 
   // ─── Hero Section ────────────────────────────────────────────────────────────
@@ -133,34 +134,35 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   it('should validate form constraints and successfully dispatch a care consultation', () => {
     cy.get('@home').then((home) => {
-      const { form } = home.contact;
+      cy.get('@homeData').then((homeData) => {
+        const { form } = home.contact;
+        const inputData = homeData.consultationForm.desktop;
 
-      cy.intercept('POST', '/api/consultation').as('consultationRequest');
+        cy.intercept('POST', '/api/consultation').as('consultationRequest');
 
-      cy.get('#contact').within(() => {
-        // Attempt invalid empty submission to trigger client-side validation
-        cy.contains('button', form.cta).click();
+        cy.get('#contact').within(() => {
+          // Attempt invalid empty submission to trigger client-side validation
+          cy.contains('button', form.cta).click();
 
-        // Fill in fields using CMS-sourced field names as selectors
-        cy.get('input[name="name"]').clear().type('Adelaide Vance');
-        cy.get('input[name="email"]').clear().type('adelaide@example.com');
-        cy.get('input[name="phone"]').clear().type('416-555-0199');
-        cy.get('select[name="typeOfCare"]').select('Memory Support');
-        cy.get('textarea[name="helpDescription"]').clear().type(
-          'My grandmother requires specialized companion dementia support.'
-        );
+          // Fill in fields using fixture input sample
+          cy.get('input[name="name"]').clear().type(inputData.name);
+          cy.get('input[name="email"]').clear().type(inputData.email);
+          cy.get('input[name="phone"]').clear().type(inputData.phone);
+          cy.get('select[name="typeOfCare"]').select(inputData.typeOfCare);
+          cy.get('textarea[name="helpDescription"]').clear().type(inputData.helpDescription);
 
-        // Submit form
-        cy.contains('button', form.cta).click();
-      });
+          // Submit form
+          cy.contains('button', form.cta).click();
+        });
 
-      // Wait for endpoint handshake
-      cy.wait('@consultationRequest').its('response.statusCode').should('eq', 200);
+        // Wait for endpoint handshake
+        cy.wait('@consultationRequest').its('response.statusCode').should('eq', 200);
 
-      // Verify success banner matches CMS copy
-      cy.get('#contact').within(() => {
-        cy.contains('h3', form.successMessage.title).should('be.visible');
-        cy.contains('p', form.successMessage.description).should('be.visible');
+        // Verify success banner matches CMS copy
+        cy.get('#contact').within(() => {
+          cy.contains('h3', form.successMessage.title).should('be.visible');
+          cy.contains('p', form.successMessage.description).should('be.visible');
+        });
       });
     });
   });
