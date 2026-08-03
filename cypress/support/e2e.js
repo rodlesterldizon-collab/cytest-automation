@@ -1,6 +1,7 @@
 // This is the global support file loaded automatically before all test specs.
 // Import custom commands using CommonJS syntax (since we are using vanilla JS).
 require('./commands');
+import 'cypress-mochawesome-reporter/register';
 
 // Optional: Prevent uncaught exceptions from failing Cypress tests (useful for dynamic SPAs)
 Cypress.on('uncaught:exception', (err, runnable) => {

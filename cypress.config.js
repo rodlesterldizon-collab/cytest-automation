@@ -44,7 +44,18 @@ if (process.env.CYPRESS_adminPassword) envConfig.adminPassword = process.env.CYP
 if (process.env.CYPRESS_employeeEmail) envConfig.employeeEmail = process.env.CYPRESS_employeeEmail;
 if (process.env.CYPRESS_employeePassword) envConfig.employeePassword = process.env.CYPRESS_employeePassword;
 
+import mochawesomeReporter from 'cypress-mochawesome-reporter/plugin.js';
+
 export default defineConfig({
+  reporter: 'cypress-mochawesome-reporter',
+  reporterOptions: {
+    reportDir: 'cypress/reports',
+    charts: true,
+    reportPageTitle: 'CompassionCare E2E Test Report',
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false,
+  },
   e2e: {
     baseUrl: envConfig.baseUrl || "https://compassion-care.ai.studio/",
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
@@ -56,6 +67,7 @@ export default defineConfig({
     pageLoadTimeout: 30000,
     env: envConfig,
     setupNodeEvents(on, config) {
+      mochawesomeReporter(on);
       config.env = {
         ...config.env,
         ...envConfig,

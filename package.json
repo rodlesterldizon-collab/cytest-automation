@@ -15,7 +15,8 @@
   },
   "devDependencies": {
     "ajv": "^8.20.0",
-    "cypress": "^13.17.0"
+    "cypress": "^13.17.0",
+    "cypress-mochawesome-reporter": "^5.0.0"
   },
   "dependencies": {
     "@testing-library/cypress": "^10.1.3"

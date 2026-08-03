@@ -9,7 +9,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    
+
     # Use official Cypress image matching installed Cypress version
     container:
       image: cypress/included:13.17.0
@@ -29,4 +29,31 @@ jobs:
           CYPRESS_adminPassword: ${{ secrets.CYPRESS_ADMINPASSWORD || 'admin' }}
           CYPRESS_employeeEmail: ${{ secrets.CYPRESS_EMPLOYEEEMAIL || 'wena@wen.ca' }}
           CYPRESS_employeePassword: ${{ secrets.CYPRESS_EMPLOYEEPASSWORD || 'admin' }}
+          CYPRESS_space_id: ${{ secrets.CYPRESS_SPACE_ID || 'ccspace_8a39b2' }}
+          CYPRESS_content_api_base_url: ${{ secrets.CYPRESS_CONTENT_API_BASE_URL || 'https://compassion-care.ai.studio/api/content' }}
+          CYPRESS_access_token: ${{ secrets.CYPRESS_ACCESS_TOKEN || 'cc_cda_token_9e4f21' }}
           CYPRESS_MOCK_API: 'true'
+
+      - name: Upload HTML Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-html-report
+          path: cypress/reports/index.html
+          if-no-files-found: ignore
+
+      - name: Upload Failure Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Test Video Recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore
