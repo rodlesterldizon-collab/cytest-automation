@@ -19,9 +19,10 @@ A production-grade, end-to-end (E2E) and REST API test automation suite built fo
 ---
 
 ## 🚀 Key Highlights & Capabilities
-- **API-Driven Assertions**: Page-level specs (`homepage.cy.js`, `partners.cy.js`) fetch live content from the CMS Content Delivery API before each test. All text assertions — headings, CTAs, labels, pills, and descriptions — are validated against the API response, not hardcoded strings. If copy changes in the CMS, the tests automatically reflect it without code changes.
+- **API-Driven Assertions**: Page-level specs (`homepage.cy.js`, `partners.cy.js`) fetch live content from the CMS Content Delivery API via the `setupCmsPage` helper before each test. All text assertions — headings, CTAs, labels, pills, and descriptions — are validated against the API response, not hardcoded strings. If copy changes in the CMS, the tests automatically reflect it without code changes.
+- **Helper & Utility Architecture**: Encapsulates common setup and CMS fetching into modular ES modules (`cypress/support/helpers.js`), keeping specs completely clean and free of mutable top-level variables.
 - **Lift & Run Locally**: Strictly environment-decoupled; can be targeted at local development, sandbox, preview, or production instances without code changes.
-- **Fast CI/CD**: Powered by GitHub Actions using the official `cypress/included:13.17.0` container with pre-packaged Node.js and Cypress for fast pipeline execution.
+- **Fast CI/CD & Automated Artifacts**: Powered by GitHub Actions using `cypress/included:13.17.0`. Automatically uploads HTML reports (`cypress-html-report`), failure screenshots (`cypress-screenshots`), and videos (`cypress-videos`) on every run.
 - **Resilient Selectors**: Uses accessibility-first query strategies (`@testing-library/cypress`) rather than brittle CSS styling classes.
 
 ---
@@ -40,11 +41,11 @@ cytest-automation/
     ├── support/
     │   ├── e2e.js                # Global Cypress setup & custom overrides
     │   ├── commands.js           # Custom command bindings (e.g., cy.loginProgrammatic)
-    │   └── helpers.js            # Reusable helper utilities
+    │   └── helpers.js            # Reusable ES module helper functions (e.g., setupCmsPage, fetchCmsContent)
     ├── fixtures/
     │   └── testData.json         # Standard accounts and dynamic payload blueprints
     └── e2e/
-        ├── api/                  # Pure REST API endpoint contract tests
+        ├── api/                  # Pure REST API endpoint & schema contract tests
         ├── global/               # Navbar & Footer component tests
         └── pages/                # Page-level UI and user interaction specs
 ```
@@ -57,8 +58,8 @@ cytest-automation/
 | Spec File | Area Tested | Key Validations & Scenarios |
 | :--- | :--- | :--- |
 | `login.cy.js` | Identity & Access | Form field inputs, modal dialogs, IT Support intake (*skipped due to rate-limiting*), Google SSO integration |
-| `homepage.cy.js` | Landing & Services | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API |
-| `partners.cy.js` | B2B Partnerships | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API |
+| `homepage.cy.js` | Landing & Services | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API via `setupCmsPage('home', '/')` |
+| `partners.cy.js` | B2B Partnerships | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API via `setupCmsPage('corporate', '/partners')` |
 | `admin-portal.cy.js` | Admin Dashboard | Dashboard rendering, employee roster management, shift scheduling, leave auditing (*skipped*) |
 | `employee-portal.cy.js` | Caregiver Portal | Shift schedule view, interactive clock-in/clock-out timecard, caregiver profile details |
 
@@ -170,7 +171,7 @@ npm run test:cli:spec
 
 ---
 
-## ⚡ Fast CI/CD Integration
+## ⚡ Fast CI/CD Integration & Artifact Reporting
 
 The repository includes an automated GitHub Actions workflow (`.github/workflows/cypress.yml`).
 
@@ -178,10 +179,16 @@ To optimize pipeline speed, the workflow runs inside the official pre-built Dock
 
 CMS credentials (`CYPRESS_access_token`, `CYPRESS_space_id`, `CYPRESS_content_api_base_url`) are stored as **GitHub Secrets/Variables** and injected at runtime — no credentials are committed to the repository.
 
+### Artifacts Captured & Uploaded on Every CI Run:
+1. 📄 **`cypress-html-report`**: Interactive Mochawesome HTML report (`cypress/reports/index.html`).
+2. 📸 **`cypress-screenshots`**: Captured PNG failure screenshots (`cypress/screenshots`).
+3. 🎥 **`cypress-videos`**: Full test execution video MP4 recordings (`cypress/videos`).
+
 ---
 
 ## 🏆 Engineering Best Practices Applied
 
+- **Clean Helper Functions (`setupCmsPage`)**: Uses modular ES module imports (`cypress/support/helpers.js`) to handle API requests and route navigation in a single line, retrieving data via thread-safe Cypress aliases (`cy.get('@home')`) without mutable global variables (`let home`).
 - **API-Driven Content Assertions**: Page specs call the CMS Content Delivery API in `beforeEach` and alias the response. All `have.text` / `contain.text` assertions use live API data — zero hardcoded copy strings.
 - **Explicit Per-Element Testing**: Service cards, bento grid cards, highlight pills, and list items are tested individually (no programmatic loops) for clear failure isolation and readable test output.
 - **Programmatic Session Caching (`cy.session()`)**: Bypasses slow UI logins for authenticated test setup, reducing execution time by up to 85%.

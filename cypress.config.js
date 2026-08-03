@@ -15,9 +15,9 @@ let envConfig = {
   employeePassword: process.env.CYPRESS_employeePassword || "admin",
   MOCK_API: process.env.CYPRESS_MOCK_API || "true",
   // CMS Content Delivery API
-  space_id: process.env.CYPRESS_space_id || "spaceid",
+  space_id: process.env.CYPRESS_space_id,
   content_api_base_url: process.env.CYPRESS_content_api_base_url || "https://compassion-care.ai.studio/api/content",
-  access_token: process.env.CYPRESS_access_token || "accesstoken",
+  access_token: process.env.CYPRESS_access_token,
 };
 
 // Dynamically parse .env.tests if it exists locally

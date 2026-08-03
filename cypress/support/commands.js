@@ -78,3 +78,24 @@ Cypress.Commands.add('explicitWait', (ms) => {
   return cy.wait(ms);
 });
 
+/**
+ * Custom Command to fetch content directly from the CMS Content Delivery API for a given page ID.
+ * Returns the `body.content` object.
+ *
+ * @param {string} pageId - The target CMS page ID (e.g., 'home', 'corporate')
+ * @example cy.fetchCmsContent('home').then((data) => { home = data; });
+ */
+Cypress.Commands.add('fetchCmsContent', (pageId) => {
+  const apiBase = Cypress.env('content_api_base_url') || 'https://compassion-care.ai.studio/api/content';
+  const spaceId = Cypress.env('space_id') || 'ccspace_8a39b2';
+  const token = Cypress.env('access_token') || 'cc_cda_token_9e4f21';
+
+  return cy.request({
+    method: 'GET',
+    url: `${apiBase}/${spaceId}/${pageId}?access_token=${token}`,
+    failOnStatusCode: true,
+  }).its('body.content');
+});
+
+
+

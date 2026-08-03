@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: CompassionCare E2E & REST API Tests
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   cypress-run:
+    name: Execute Cypress Test Suite & Upload Artifacts
     runs-on: ubuntu-latest
 
     # Use official Cypress image matching installed Cypress version
@@ -15,26 +16,26 @@ jobs:
       image: cypress/included:13.17.0
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository Code
         uses: actions/checkout@v4
 
-      - name: Install project dependencies
+      - name: Install Project Dependencies
         run: npm ci
 
-      - name: Run Cypress tests
+      - name: Run CompassionCare E2E & API Specs
         run: npx cypress run
         env:
           CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL || 'https://compassion-care.ai.studio/' }}
-          CYPRESS_adminEmail: ${{ secrets.CYPRESS_ADMINEMAIL || 'dizonrl20@gmail.com' }}
-          CYPRESS_adminPassword: ${{ secrets.CYPRESS_ADMINPASSWORD || 'admin' }}
+          CYPRESS_adminEmail: ${{ secrets.CYPRESS_ADMINEMAIL }}
+          CYPRESS_adminPassword: ${{ secrets.CYPRESS_ADMINPASSWORD }}
           CYPRESS_employeeEmail: ${{ secrets.CYPRESS_EMPLOYEEEMAIL || 'wena@wen.ca' }}
-          CYPRESS_employeePassword: ${{ secrets.CYPRESS_EMPLOYEEPASSWORD || 'admin' }}
-          CYPRESS_space_id: ${{ secrets.CYPRESS_SPACE_ID || 'ccspace_8a39b2' }}
+          CYPRESS_employeePassword: ${{ secrets.CYPRESS_EMPLOYEEPASSWORD }}
+          CYPRESS_space_id: ${{ secrets.CYPRESS_SPACE_ID }}
           CYPRESS_content_api_base_url: ${{ secrets.CYPRESS_CONTENT_API_BASE_URL || 'https://compassion-care.ai.studio/api/content' }}
-          CYPRESS_access_token: ${{ secrets.CYPRESS_ACCESS_TOKEN || 'cc_cda_token_9e4f21' }}
+          CYPRESS_access_token: ${{ secrets.CYPRESS_ACCESS_TOKEN }}
           CYPRESS_MOCK_API: 'true'
 
-      - name: Upload HTML Test Report
+      - name: Upload Mochawesome HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:

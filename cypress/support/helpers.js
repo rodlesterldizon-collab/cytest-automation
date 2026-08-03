@@ -71,3 +71,38 @@ export function explicitWait(ms) {
   return cy.wait(ms);
 }
 
+/**
+ * Fetches content directly from the CMS Content Delivery API for a given page ID.
+ * Returns a Cypress Chainable yielding the `content` data object.
+ *
+ * @param {string} pageId - Target page ID (e.g., 'home', 'corporate')
+ * @example fetchCmsContent('home').as('home');
+ */
+export function fetchCmsContent(pageId) {
+  const apiBase = Cypress.env('content_api_base_url') || 'https://compassion-care.ai.studio/api/content';
+  const spaceId = Cypress.env('space_id') || 'ccspace_8a39b2';
+  const token = Cypress.env('access_token') || 'cc_cda_token_9e4f21';
+
+  return cy.request({
+    method: 'GET',
+    url: `${apiBase}/${spaceId}/${pageId}?access_token=${token}`,
+    failOnStatusCode: true,
+  }).its('body.content');
+}
+
+/**
+ * Helper to fetch CMS page data and visit the target route in one call.
+ * Aliases the fetched CMS content under `@${aliasName || pageId}`.
+ *
+ * @param {string} pageId - Target page ID (e.g., 'home', 'corporate')
+ * @param {string} route - Target UI route (e.g., '/', '/partners')
+ * @param {string} [aliasName] - Optional custom alias name
+ * @example setupCmsPage('home', '/'); // Access data via cy.get('@home')
+ */
+export function setupCmsPage(pageId, route = '/', aliasName) {
+  const alias = aliasName || pageId;
+  fetchCmsContent(pageId).as(alias);
+  cy.visit(route);
+}
+
+
