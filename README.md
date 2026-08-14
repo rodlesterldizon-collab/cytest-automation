@@ -263,3 +263,25 @@ CMS credentials (`CYPRESS_access_token`, `CYPRESS_space_id`, `CYPRESS_content_ap
 - **Accessibility-First Selectors (`@testing-library/cypress`)**: Uses `cy.findByRole()` and `cy.findByLabelText()` to keep tests decoupled from CSS styling or Tailwind class refactors.
 - **Flexible Waiting Strategies**: Employs dynamic polling (`fluentWait`) and optional explicit delays (`explicitWait`) rather than brittle fixed sleeps.
 - **Environment Isolation**: Dynamic configuration parsing (`cypress.config.js`) allows seamless switching between local dev server, preview builds, and live production environments.
+
+---
+
+### 🎯 Element Selector Strategy & Locator Architecture
+
+The test suite leverages a pragmatic, hybrid selector hierarchy that balances idiomatic Cypress code, test stability, and DOM scope isolation:
+
+1. **Accessibility-First Semantic Selectors (`@testing-library/cypress`)**:
+   - **Pattern**: `cy.findByRole('button', { name: /request consultation/i })`, `cy.findByLabelText(/email/i)`
+   - **Rationale**: Preferred for primary CTAs, accessible form controls, and key user actions to align tests with real user behavior and decouple assertions from styling refactors.
+
+2. **Standard Cypress DOM & Attribute Selectors (Native Cypress)**:
+   - **Pattern**: `cy.get('input[name="name"]')`, `cy.get('#password')`, `cy.contains('Forgot Password?')`
+   - **Rationale**: Standard, idiomatic Cypress locators used throughout the suite for form inputs, element IDs, and text assertions — providing clean, fast, and readable test code.
+
+3. **Component Container Anchoring (`.within()`)**:
+   - **Pattern**: `cy.get('#contact').within(() => { ... })` / `cy.get('#services').within(() => { ... })`
+   - **Rationale**: Establishes strict component boundaries before executing child queries, eliminating global DOM search pollution and preventing false-positive matches across distant page sections.
+
+4. **Scoped Collection Indexing for Dynamic CMS Arrays**:
+   - **Pattern**: `cy.get('.grid > div').eq(i)` inside an anchored `.within()` container
+   - **Rationale**: Applied specifically when iterating over dynamic CMS collection arrays (e.g., 4 service cards, 4 metric counters) returned by the Content Delivery API, where cards share identical structural templates without unique static accessibility roles.
