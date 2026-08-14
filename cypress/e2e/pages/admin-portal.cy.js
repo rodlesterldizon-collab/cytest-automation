@@ -21,7 +21,7 @@ describe('Administrative Portal Management Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should support staff registry auditing and employee state switches', () => {
+  it.skip('[Test-001] should support staff registry auditing and employee state switches', () => {
     cy.visit('/admin');
 
     // Switch to Employee Registry tab
@@ -42,7 +42,7 @@ describe('Administrative Portal Management Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should assign, list, and delete client shifts through the master scheduling interface', () => {
+  it.skip('[Test-002] should assign, list, and delete client shifts through the master scheduling interface', () => {
     cy.visit('/admin');
 
     // We are on the 'Scheduler' tab by default
@@ -96,7 +96,7 @@ describe('Administrative Portal Management Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should support auditing of caregiver leave requests and updating approval states', () => {
+  it.skip('[Test-003] should support auditing of caregiver leave requests and updating approval states', () => {
     cy.visit('/admin');
 
     // Navigate to Leave Approvals tab
@@ -108,7 +108,7 @@ describe('Administrative Portal Management Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should respond reactively to live Feature Flag visibility adjustments', () => {
+  it.skip('[Test-004] should respond reactively to live Feature Flag visibility adjustments', () => {
     cy.visit('/admin');
 
     // 1. Open Feature Flag console drawer

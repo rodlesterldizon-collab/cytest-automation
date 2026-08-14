@@ -28,7 +28,7 @@ jobs:
           CYPRESS_baseUrl: ${{ secrets.CYPRESS_BASEURL || 'https://compassion-care.ai.studio/' }}
           CYPRESS_adminEmail: ${{ secrets.CYPRESS_ADMINEMAIL }}
           CYPRESS_adminPassword: ${{ secrets.CYPRESS_ADMINPASSWORD }}
-          CYPRESS_employeeEmail: ${{ secrets.CYPRESS_EMPLOYEEEMAIL || 'wena@wen.ca' }}
+          CYPRESS_employeeEmail: ${{ secrets.CYPRESS_EMPLOYEEEMAIL }}
           CYPRESS_employeePassword: ${{ secrets.CYPRESS_EMPLOYEEPASSWORD }}
           CYPRESS_space_id: ${{ secrets.CYPRESS_SPACE_ID }}
           CYPRESS_content_api_base_url: ${{ secrets.CYPRESS_CONTENT_API_BASE_URL || 'https://compassion-care.ai.studio/api/content' }}

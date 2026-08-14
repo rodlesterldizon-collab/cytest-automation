@@ -87,8 +87,8 @@ Cypress.Commands.add('explicitWait', (ms) => {
  */
 Cypress.Commands.add('fetchCmsContent', (pageId) => {
   const apiBase = Cypress.env('content_api_base_url') || 'https://compassion-care.ai.studio/api/content';
-  const spaceId = Cypress.env('space_id') || 'ccspace_8a39b2';
-  const token = Cypress.env('access_token') || 'cc_cda_token_9e4f21';
+  const spaceId = Cypress.env('space_id');
+  const token = Cypress.env('access_token');
 
   return cy.request({
     method: 'GET',

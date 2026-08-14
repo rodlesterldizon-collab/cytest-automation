@@ -15,7 +15,7 @@ describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Hero Section ──────────────────────────────────────────────────────
 
-  it('should render corporate hero section with visible branding and CTAs on mobile', () => {
+  it('[Test-037] should render corporate hero section with visible branding and CTAs on mobile', () => {
     cy.get('@corporate').then((corp) => {
       const { navigation, hero } = corp;
 
@@ -30,7 +30,7 @@ describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Bento Grid ────────────────────────────────────────────────────────
 
-  it('should render stacked bento feature cards on mobile viewport', () => {
+  it('[Test-038] should render stacked bento feature cards on mobile viewport', () => {
     cy.get('@corporate').then((corp) => {
       const { features } = corp;
 
@@ -59,7 +59,7 @@ describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile ROI Calculator ────────────────────────────────────────────────────
 
-  it('should allow slider interaction and display ROI impact on mobile screens', () => {
+  it('[Test-039] should allow slider interaction and display ROI impact on mobile screens', () => {
     cy.get('@corporate').then((corp) => {
       const { calculator } = corp;
 
@@ -78,7 +78,7 @@ describe('Corporate Partnerships Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Inquiry Form ──────────────────────────────────────────────────────
 
-  it('should submit corporate partnership inquiry on mobile screen', () => {
+  it('[Test-040] should submit corporate partnership inquiry on mobile screen', () => {
     cy.get('@corporate').then((corp) => {
       cy.get('@partnersData').then((partnersData) => {
         const { inquiry } = corp;

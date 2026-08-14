@@ -67,34 +67,60 @@ cytest-automation/
 
 ## 🧪 Complete Test Suite Coverage
 
-### 🌐 1. User Interface (UI) Specs (`cypress/e2e/pages/`)
-| Spec File | Area Tested | Key Validations & Scenarios |
-| :--- | :--- | :--- |
-| `login.cy.js` | Identity & Access | Form field inputs, modal dialogs, IT Support intake, Google SSO integration |
-| `homepage.cy.js` | Landing & Services (Desktop) | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API via `setupCmsPage('home', '/')` |
-| `homepage.mobile.cy.js` | Landing & Services (Mobile) | iPhone-X viewport (375x812) layout validation, mobile stacked grids, touch targets, and consultation form |
-| `homepage.tablet.cy.js` | Landing & Services (Tablet) | iPad-2 viewport (768x1024) layout validation, 2x2 stats grid, tablet component sizing, and consultation form |
-| `partners.cy.js` | B2B Partnerships (Desktop) | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API via `setupCmsPage('corporate', '/partners')` |
-| `partners.mobile.cy.js` | B2B Partnerships (Mobile) | iPhone-X viewport (375x812) layout validation, stacked bento cards, ROI calculator, and inquiry form |
-| `partners.tablet.cy.js` | B2B Partnerships (Tablet) | iPad-2 viewport (768x1024) layout validation, tablet bento grid, ROI calculator, and inquiry form |
-| `admin-portal.cy.js` | Admin Dashboard | Dashboard rendering, employee roster management, shift scheduling, leave auditing |
-| `employee-portal.cy.js` | Caregiver Portal | Shift schedule view, interactive clock-in/clock-out timecard, caregiver profile details |
+### 📊 Test Execution Summary
 
-### 🧩 2. Global Component Specs (`cypress/e2e/global/`)
-| Spec File | Area Tested | Key Validations & Scenarios |
-| :--- | :--- | :--- |
-| `navbar.cy.js` | Header Navigation | Brand logo, unauthenticated page links, smooth navigation to B2B Partners, Login, and Privacy Policy |
-| `footer.cy.js` | Footer Component | Company branding, legal disclaimers, external links, copyright notice |
+| Metric | Count | Percentage | Description |
+| :--- | :---: | :---: | :--- |
+| **Total Test Cases Designed** | **116** | **100%** | Complete suite of E2E, Component, and REST API contract test cases (`[Test-001]`–`[Test-116]`) |
+| **Active Executing Tests (CI)** | **96** | **82.8%** | Fully automated, actively executed and passing on every CI build run |
+| **Skipped Tests (`it.skip`)** | **20** | **17.2%** | Designed & implemented; skipped on demo host due to free-tier backend rate limits (`HTTP 429`) |
 
-### 🔌 3. REST API Contract Specs (`cypress/e2e/api/`)
-| Spec File | Area Tested | Key Validations & Scenarios |
-| :--- | :--- | :--- |
-| `auth.cy.js` | Authentication API | `POST /api/auth/login` credentials check, `GET /api/auth/me` session check, 401 error handling |
-| `admin.cy.js` | Admin Control API | `POST /api/admin/add-employee`, employee status toggles, schedule creation & deletion |
-| `portal.cy.js` | Employee Portal API | `GET /api/portal/schedules`, timecard `clock-in`/`clock-out`, leave request submission |
-| `content.cy.js` | CMS Content API | `GET /api/content/{spaceId}/{pageId}` contract validation for `home` and `corporate` page payloads |
-| `content.schema.cy.js` | AJV Schema & Security | AJV JSON Schema validation for form fields, HTTP 401/403 auth checks, 404 handling, response duration (<3s) |
-| `form-submission.cy.js` | Form Input Validation | `POST /api/consultation` and `POST /api/partnership` field validations (valid 200, invalid email format rejection 400/422, missing required fields 400/422) |
+---
+
+### 💡 Architectural Awareness & Free-Tier Infrastructure Limitations
+
+This test automation suite is engineered to reflect enterprise-grade practices while consciously addressing free-tier cloud hosting boundaries:
+
+1. **Free-Tier Rate-Limit Protection (`HTTP 429`)**:
+   - **Infrastructure Context**: The application is deployed on Google Cloud Platform & Firebase under a personal, non-paid Gmail account.
+   - **Rate Limiting Limitation**: Rapid automated authentication loops fire sequential `POST /api/auth/login` and administrative API calls, triggering aggressive free-tier throttling (`429 Too Many Requests`).
+   - **Mitigation Strategy**: Rather than causing false-positive CI pipeline failures against public free-tier endpoints, sensitive auth and admin operational specs (`auth.cy.js`, `admin.cy.js`, `portal.cy.js`) are preserved in code but set to `it.skip` on CI. The full test logic remains production-ready for execution against dedicated enterprise sandboxes or paid corporate environments.
+
+2. **API-Driven Copy Assertions vs. Business Copy Regressions**:
+   - **Integration Strategy**: `setupCmsPage` fetches live CMS payloads before page navigation, ensuring text assertions adapt automatically to copy updates without hardcoded strings.
+   - **Defect Awareness**: Comparing rendered DOM text against live CMS data verifies UI rendering, but could accept invalid CMS copy as expected truth if the CMS itself has errors.
+   - **Production Standard**: In enterprise environments, this trade-off is resolved by executing content validation tests against the CMS **Preview Environment** prior to production deployment.
+
+---
+
+### 🌐 1. User Interface (UI) Specs (`cypress/e2e/pages/`) — 45 Tests (38 Active, 7 Skipped)
+| Spec File | Total / Status | Area Tested | Key Validations & Scenarios |
+| :--- | :---: | :--- | :--- |
+| `login.cy.js` | 4 (3 Active, 1 Skipped) | Identity & Access | Form field inputs, modal dialogs, IT Support intake, Google SSO integration |
+| `homepage.cy.js` | 6 Active | Landing & Services (Desktop) | Hero badge/headings/CTAs, stats grid, mission section, all 4 service cards, consultation form, contact info — all text driven by the `home` CMS API via `setupCmsPage('home', '/')` |
+| `homepage.mobile.cy.js` | 5 Active | Landing & Services (Mobile) | iPhone-X viewport (375x812) layout validation, mobile stacked grids, touch targets, and consultation form |
+| `homepage.tablet.cy.js` | 5 Active | Landing & Services (Tablet) | iPad-2 viewport (768x1024) layout validation, 2x2 stats grid, tablet component sizing, and consultation form |
+| `partners.cy.js` | 8 Active | B2B Partnerships (Desktop) | Hero, how-it-works, 3 bento feature cards, interactive ROI calculator (labels, care levels, impact panel, computed values), testimonial, inquiry form, contact info — all text driven by the `corporate` CMS API via `setupCmsPage('corporate', '/partners')` |
+| `partners.mobile.cy.js` | 4 Active | B2B Partnerships (Mobile) | iPhone-X viewport (375x812) layout validation, stacked bento cards, ROI calculator, and inquiry form |
+| `partners.tablet.cy.js` | 4 Active | B2B Partnerships (Tablet) | iPad-2 viewport (768x1024) layout validation, tablet bento grid, ROI calculator, and inquiry form |
+| `admin-portal.cy.js` | 4 Skipped | Admin Dashboard | Dashboard rendering, employee roster management, shift scheduling, leave auditing *(Skipped due to rate limits)* |
+| `employee-portal.cy.js` | 4 (2 Active, 2 Skipped) | Caregiver Portal | Shift schedule view, interactive clock-in/clock-out timecard, caregiver profile details |
+
+### 🧩 2. Global Component Specs (`cypress/e2e/global/`) — 7 Tests (7 Active)
+| Spec File | Total / Status | Area Tested | Key Validations & Scenarios |
+| :--- | :---: | :--- | :--- |
+| `navbar.cy.js` | 4 Active | Header Navigation | Brand logo, unauthenticated page links, smooth navigation to B2B Partners, Login, and Privacy Policy |
+| `footer.cy.js` | 3 Active | Footer Component | Company branding, legal disclaimers, external links, copyright notice |
+
+### 🔌 3. REST API Contract Specs (`cypress/e2e/api/`) — 64 Tests (51 Active, 13 Skipped)
+| Spec File | Total / Status | Area Tested | Key Validations & Scenarios |
+| :--- | :---: | :--- | :--- |
+| `auth.cy.js` | 4 (1 Active, 3 Skipped) | Authentication API | `POST /api/auth/login` credentials check, `GET /api/auth/me` session check, 401 error handling |
+| `admin.cy.js` | 3 (1 Active, 2 Skipped) | Admin Control API | `POST /api/admin/add-employee`, employee status toggles, schedule creation & deletion |
+| `portal.cy.js` | 8 Skipped | Employee Portal API | `GET /api/portal/schedules`, timecard `clock-in`/`clock-out`, leave request submission *(Designed; `it.skip` on CI due to free-tier rate limits)* |
+| `content.cy.js` | 22 Active | CMS Content API | `GET /api/content/{spaceId}/{pageId}` contract validation for `home` and `corporate` page payloads |
+| `content.schema.cy.js` | 22 Active | AJV Schema & Security | AJV JSON Schema validation for form fields, HTTP 401/403 auth checks, 404 handling, response duration (<3s) |
+| `form-submission.cy.js` | 6 Active | Form Input Validation | `POST /api/consultation` and `POST /api/partnership` field validations (valid 200, invalid email format rejection 400/422, missing required fields 400/422) |
 
 ---
 
@@ -122,6 +148,10 @@ The API test suite (`cypress/e2e/api/`) validates backend endpoints and CMS data
      - ❌ **Invalid Email**: Sends malformed email string, asserts HTTP 400/422 validation failure.
      - ❌ **Missing Fields**: Sends missing mandatory parameters, asserts HTTP 400/422 validation failure.
 
+4. **Authentication & Operations API Specs (`auth.cy.js`, `admin.cy.js`, `portal.cy.js`)**:
+   - **Designed Scenarios**: Full coverage for valid administrator/caregiver login, secure `CC_SESSION` HttpOnly cookie set/purge, session validation without password leakage, invalid credential rejection, employee management, and shift/leave operations.
+   - **Free-Tier Account & Rate Limit Constraints (`it.skip`)**: The target application is hosted on a free-tier Google Cloud / Firebase account using a personal (non-paid corporate) Gmail account. The free tier enforces strict rate limits that return HTTP `429 Too Many Requests` when executing rapid automated auth calls. To prevent false-positive CI pipeline failures on this public free-tier host, these specs are set to `it.skip` on CI while preserving complete, production-ready test implementations for paid corporate environments.
+
 ---
 
 ## 🔑 CMS Content Delivery API
@@ -137,6 +167,11 @@ Page-level specs fetch live content from the **CompassionCare CMS** before each 
 **Supported page IDs**: `home`, `corporate`, `footer`, `privacy`, `terms`, `navigation`, `admin-portal`, `employee-portal`
 
 > The `/partners` page on the live site maps to the `corporate` CMS page ID.
+
+> ⚠️ **CMS Content Verification & Business Regression Note**  
+> The `setupCmsPage` helper fetches current CMS content before visiting the route, and page assertions compare rendered text with that live response. This avoids hardcoding copy and is valuable for integration testing. However, it can also hide a business regression: if the CMS contains incorrect content, the test may accept the incorrect content as the expected result.  
+>  
+> In order to avoid this, since this is a demo it only uses the staging demo data. On a real live site to cover business regressions, the content may be tested on the preview environment of the CMS to avoid business-related defects.
 
 ---
 

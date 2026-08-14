@@ -7,3 +7,4 @@ cypress/reports/
 .env.tests
 .env
 .env.*
+!.env.tests.example

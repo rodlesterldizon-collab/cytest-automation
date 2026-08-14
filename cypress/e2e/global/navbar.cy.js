@@ -4,7 +4,7 @@ describe('Global Header Navigation Bar Spec', () => {
     cy.visit('/');
   });
 
-  it('should render the brand logo and all core unauthenticated navigation links', () => {
+  it('[Test-045] should render the brand logo and all core unauthenticated navigation links', () => {
     // Priority 1: Semantic query findByText
     cy.contains('CompassionCare').should('be.visible');
 
@@ -14,7 +14,7 @@ describe('Global Header Navigation Bar Spec', () => {
     cy.get('nav').contains('button', 'Portal').should('be.visible');
   });
 
-  it('should navigate smoothly to the B2B Corporate partnerships view', () => {
+  it('[Test-046] should navigate smoothly to the B2B Corporate partnerships view', () => {
     // Click on B2B links and assert state path changes to '/partners'
     cy.get('nav').contains('button', 'Partnerships').click();
     cy.url().should('include', '/partners');
@@ -23,12 +23,12 @@ describe('Global Header Navigation Bar Spec', () => {
     cy.contains('Interactive ROI Tool').should('be.visible');
   });
 
-  it('should navigate to the Staff Login Portal screen', () => {
+  it('[Test-047] should navigate to the Staff Login Portal screen', () => {
     cy.get('nav').contains('button', 'Portal').click();
     cy.url().should('include', '/login');
     cy.contains('Employee Access Portal').should('be.visible');
   });
-  it('should navigate to the Privacy Policy screen', () => {
+  it('[Test-048] should navigate to the Privacy Policy screen', () => {
     cy.get('header').contains('button', 'Privacy').click();
     cy.url().should('include', '/privacy');
     cy.contains('Comprehensive Privacy and Data Governance Policy').should('be.visible');

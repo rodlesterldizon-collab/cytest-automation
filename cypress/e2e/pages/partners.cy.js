@@ -14,7 +14,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── Hero Section ─────────────────────────────────────────────────────────────
 
-  it('should render the corporate branding hero and navigation triggers', () => {
+  it('[Test-029] should render the corporate branding hero and navigation triggers', () => {
     cy.get('@corporate').then((corp) => {
       const { navigation, hero } = corp;
 
@@ -49,7 +49,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── How It Works ─────────────────────────────────────────────────────────────
 
-  it('should render the how-it-works section title and contact link', () => {
+  it('[Test-030] should render the how-it-works section title and contact link', () => {
     cy.get('@corporate').then((corp) => {
       const { howItWorks } = corp;
 
@@ -60,7 +60,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── Features / Bento Grid ────────────────────────────────────────────────────
 
-  it('should verify on-demand certified professionals benefits bento layout', () => {
+  it('[Test-031] should verify on-demand certified professionals benefits bento layout', () => {
     cy.get('@corporate').then((corp) => {
       const { features } = corp;
 
@@ -102,7 +102,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── ROI Calculator ───────────────────────────────────────────────────────────
 
-  it('should calculate correct ROI estimates inside the interactive savings widget', () => {
+  it('[Test-032] should calculate correct ROI estimates inside the interactive savings widget', () => {
     cy.get('@corporate').then((corp) => {
       const { calculator } = corp;
 
@@ -152,7 +152,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── Testimonial ──────────────────────────────────────────────────────────────
 
-  it('should render the testimonial quote, author, and role from CMS', () => {
+  it('[Test-033] should render the testimonial quote, author, and role from CMS', () => {
     cy.get('@corporate').then((corp) => {
       const { testimonial } = corp;
 
@@ -164,7 +164,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── Partnership Inquiry Form ─────────────────────────────────────────────────
 
-  it('should render the inquiry section title, description, and footer note', () => {
+  it('[Test-034] should render the inquiry section title, description, and footer note', () => {
     cy.get('@corporate').then((corp) => {
       const { inquiry } = corp;
 
@@ -174,7 +174,7 @@ describe('Corporate Partnerships Spec', () => {
     });
   });
 
-  it('should dispatch corporate partnership intake inquiries successfully', () => {
+  it('[Test-035] should dispatch corporate partnership intake inquiries successfully', () => {
     cy.get('@corporate').then((corp) => {
       cy.get('@partnersData').then((partnersData) => {
         const { inquiry } = corp;
@@ -200,7 +200,7 @@ describe('Corporate Partnerships Spec', () => {
 
   // ─── Contact Info ─────────────────────────────────────────────────────────────
 
-  it('should render the contact address, email, and phone from CMS', () => {
+  it('[Test-036] should render the contact address, email, and phone from CMS', () => {
     cy.get('@corporate').then((corp) => {
       const { contact } = corp;
 

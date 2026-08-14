@@ -6,18 +6,18 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initial fallback configuration using system environment variables or defaults
+// Initial configuration reading from system environment variables
 let envConfig = {
   baseUrl: process.env.CYPRESS_baseUrl || process.env.CYPRESS_BASE_URL || "https://compassion-care.ai.studio/",
-  adminEmail: process.env.CYPRESS_adminEmail || "admin@example.com",
-  adminPassword: process.env.CYPRESS_adminPassword || "admin",
-  employeeEmail: process.env.CYPRESS_employeeEmail || "employee@example.com",
-  employeePassword: process.env.CYPRESS_employeePassword || "admin",
+  adminEmail: process.env.CYPRESS_adminEmail || "",
+  adminPassword: process.env.CYPRESS_adminPassword || "",
+  employeeEmail: process.env.CYPRESS_employeeEmail || "",
+  employeePassword: process.env.CYPRESS_employeePassword || "",
   MOCK_API: process.env.CYPRESS_MOCK_API || "true",
   // CMS Content Delivery API
-  space_id: process.env.CYPRESS_space_id,
+  space_id: process.env.CYPRESS_space_id || "",
   content_api_base_url: process.env.CYPRESS_content_api_base_url || "https://compassion-care.ai.studio/api/content",
-  access_token: process.env.CYPRESS_access_token,
+  access_token: process.env.CYPRESS_access_token || "",
 };
 
 // Dynamically parse .env.tests if it exists locally

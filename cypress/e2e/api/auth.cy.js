@@ -15,7 +15,7 @@ describe('Backend Identity & Auth API Contract Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should validate administrator credentials and set the secure HttpOnly cookie', () => {
+  it('[Test-055] should validate administrator credentials and set the secure HttpOnly cookie', () => {
     // Clear cookies before verifying login behavior
     cy.clearCookies();
 
@@ -36,7 +36,7 @@ describe('Backend Identity & Auth API Contract Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should reject invalid credentials and return safe error parameters', () => {
+  it.skip('[Test-056] should reject invalid credentials and return safe error parameters', () => {
     cy.request({
       method: 'POST',
       url: '/api/auth/login',
@@ -54,7 +54,7 @@ describe('Backend Identity & Auth API Contract Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should verify the active session safely via the me route without leaking secrets', () => {
+  it.skip('[Test-057] should verify the active session safely via the me route without leaking secrets', () => {
     // Authenticate programmatically first
     const credentials = getAdminCredentials();
     cy.loginProgrammatic(credentials.email, credentials.password);
@@ -72,7 +72,7 @@ describe('Backend Identity & Auth API Contract Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should log out programmatically and purge browser sessions', () => {
+  it.skip('[Test-058] should log out programmatically and purge browser sessions', () => {
     // Authenticate first
     const credentials = getAdminCredentials();
     cy.loginProgrammatic(credentials.email, credentials.password);

@@ -15,7 +15,7 @@ describe('Corporate Partnerships Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Hero Section ──────────────────────────────────────────────────────
 
-  it('should render corporate hero section with visible branding and CTAs on tablet', () => {
+  it('[Test-041] should render corporate hero section with visible branding and CTAs on tablet', () => {
     cy.get('@corporate').then((corp) => {
       const { navigation, hero } = corp;
 
@@ -30,7 +30,7 @@ describe('Corporate Partnerships Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Bento Grid ────────────────────────────────────────────────────────
 
-  it('should render bento feature cards in tablet grid layout', () => {
+  it('[Test-042] should render bento feature cards in tablet grid layout', () => {
     cy.get('@corporate').then((corp) => {
       const { features } = corp;
 
@@ -59,7 +59,7 @@ describe('Corporate Partnerships Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet ROI Calculator ────────────────────────────────────────────────────
 
-  it('should allow slider interaction and display ROI impact on tablet screens', () => {
+  it('[Test-043] should allow slider interaction and display ROI impact on tablet screens', () => {
     cy.get('@corporate').then((corp) => {
       const { calculator } = corp;
 
@@ -78,7 +78,7 @@ describe('Corporate Partnerships Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Inquiry Form ──────────────────────────────────────────────────────
 
-  it('should submit corporate partnership inquiry on tablet screen', () => {
+  it('[Test-044] should submit corporate partnership inquiry on tablet screen', () => {
     cy.get('@corporate').then((corp) => {
       cy.get('@partnersData').then((partnersData) => {
         const { inquiry } = corp;

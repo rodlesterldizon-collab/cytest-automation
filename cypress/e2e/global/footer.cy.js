@@ -3,7 +3,7 @@ describe('Global Footer Component Spec', () => {
     cy.visit('/');
   });
 
-  it('should render brand information and social copyright notice', () => {
+  it('[Test-049] should render brand information and social copyright notice', () => {
     // Assert visual branding matches copy decks
     cy.get('footer').should('be.visible');
     cy.get('footer').within(() => {
@@ -12,7 +12,7 @@ describe('Global Footer Component Spec', () => {
     });
   });
 
-  it('should navigate smoothly to the Privacy Policy static route', () => {
+  it('[Test-050] should navigate smoothly to the Privacy Policy static route', () => {
     cy.get('footer').within(() => {
       cy.contains('Privacy Policy').click();
     });
@@ -29,7 +29,7 @@ describe('Global Footer Component Spec', () => {
 
   });
 
-  it('should navigate smoothly to the Terms of Service static route', () => {
+  it('[Test-051] should navigate smoothly to the Terms of Service static route', () => {
     cy.get('footer').within(() => {
       cy.contains('Terms of Service').click();
     });

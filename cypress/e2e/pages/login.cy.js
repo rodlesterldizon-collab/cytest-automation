@@ -4,7 +4,7 @@ describe('Staff Identity & Access Management Spec', () => {
     cy.visit('/login');
   });
 
-  it('should display the core login forms and visual credentials input', () => {
+  it('[Test-009] should display the core login forms and visual credentials input', () => {
     cy.get('h1').should('be.visible');
     cy.get('h2').should('be.visible');
     cy.get('h2').next('p').should('be.visible');
@@ -14,7 +14,7 @@ describe('Staff Identity & Access Management Spec', () => {
     cy.contains('Contact IT Support').should('be.visible');
   });
 
-  it('should display the modal when forgot password is pressed', () => {
+  it('[Test-010] should display the modal when forgot password is pressed', () => {
     cy.on('window:alert', (alertText) => {
       // Assert that the text inside the alert is exactly what you expect
       expect(alertText).to.include('In a production setup, a reset link is dispatched to your registered @compassioncare.com inbox.');
@@ -24,7 +24,7 @@ describe('Staff Identity & Access Management Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should trigger contact IT support slide-down form and dispatch an access request', () => {
+  it('[Test-011] should trigger contact IT support slide-down form and dispatch an access request', () => {
     // Intercept IT Support request endpoint
     cy.intercept('POST', '/api/auth/request-access').as('requestAccess');
 
@@ -49,7 +49,7 @@ describe('Staff Identity & Access Management Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('SSO Google Multi-Environment Authentication - Future Phase', () => {
+  it.skip('[Test-012] SSO Google Multi-Environment Authentication - Future Phase', () => {
 
     cy.window().then((win) => {
       cy.stub(win, 'open').as('googleRedirectAttempt');

@@ -15,7 +15,7 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Hero Section ──────────────────────────────────────────────────────
 
-  it('should render tablet hero section with visible branding and CTAs', () => {
+  it('[Test-024] should render tablet hero section with visible branding and CTAs', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(0).within(() => {
         cy.contains('span', home.hero.badge).should('be.visible');
@@ -29,7 +29,7 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Stats Grid ───────────────────────────────────────────────────────
 
-  it('should render 2x2 stats grid with all CMS values on tablet', () => {
+  it('[Test-025] should render 2x2 stats grid with all CMS values on tablet', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(1).within(() => {
         home.stats.items.forEach(({ value, label }) => {
@@ -42,7 +42,7 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet About Section ─────────────────────────────────────────────────────
 
-  it('should render mission section and all 4 feature cards on tablet viewport', () => {
+  it('[Test-026] should render mission section and all 4 feature cards on tablet viewport', () => {
     cy.get('@home').then((home) => {
       cy.get('#about').within(() => {
         cy.contains('h2', home.about.title).should('be.visible');
@@ -58,7 +58,7 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Services Grid ─────────────────────────────────────────────────────
 
-  it('should render all 4 service cards in tablet grid layout', () => {
+  it('[Test-027] should render all 4 service cards in tablet grid layout', () => {
     cy.get('@home').then((home) => {
       const { services } = home;
 
@@ -77,7 +77,7 @@ describe('Public Landing Homepage Tablet Viewport Spec (768x1024)', () => {
 
   // ─── Tablet Contact Form ──────────────────────────────────────────────────────
 
-  it('should allow typing and dispatching consultation form on tablet', () => {
+  it('[Test-028] should allow typing and dispatching consultation form on tablet', () => {
     cy.get('@home').then((home) => {
       cy.get('@homeData').then((homeData) => {
         const { form } = home.contact;

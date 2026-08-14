@@ -20,7 +20,7 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
     cy.loginProgrammatic(credentials.email, credentials.password);
   });
 
-  it('should render the welcome banner dynamically with personal profile credentials', () => {
+  it('[Test-005] should render the welcome banner dynamically with personal profile credentials', () => {
     cy.visit('/dashboard');
 
     // Assert dynamic profile elements exist
@@ -28,7 +28,7 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
     cy.contains(`Welcome back`).should('be.visible');
   });
 
-  it('should handle shift clock-in/out and completion triggers with button-locking state controls', () => {
+  it('[Test-006] should handle shift clock-in/out and completion triggers with button-locking state controls', () => {
     cy.visit('/dashboard');
 
     // Intercept API clocks
@@ -66,7 +66,7 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should prompt an Inactivity Security Alert warning at the idle threshold boundary and support resets', () => {
+  it.skip('[Test-007] should prompt an Inactivity Security Alert warning at the idle threshold boundary and support resets', () => {
     // Use cy.clock to manipulate system times programmatically (no hardcoded waits!)
     cy.clock();
 
@@ -86,7 +86,7 @@ describe('Employee/Caregiver Operational Portal Page Spec', () => {
 
   // Skipped to prevent HTTP 429 (Too Many Requests) rate limiting on demo Google Cloud hosting.
   // Can be run in limited fashion or against a dedicated environment.
-  it.skip('should force automated logout and purge session state if the countdown warning is fully ignored', () => {
+  it.skip('[Test-008] should force automated logout and purge session state if the countdown warning is fully ignored', () => {
     cy.clock();
 
     cy.visit('/dashboard');

@@ -14,7 +14,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── Hero Section ────────────────────────────────────────────────────────────
 
-  it('should render the hero section using CMS copy and verify CTAs scroll correctly', () => {
+  it('[Test-013] should render the hero section using CMS copy and verify CTAs scroll correctly', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(0).within(() => {
         // Badge / trust signal
@@ -51,7 +51,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── Stats / Metrics Grid ────────────────────────────────────────────────────
 
-  it('should render the stats grid with CMS values and labels', () => {
+  it('[Test-014] should render the stats grid with CMS values and labels', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(1).within(() => {
         home.stats.items.forEach(({ value, label }) => {
@@ -64,7 +64,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── About / Mission Section ──────────────────────────────────────────────────
 
-  it('should verify the mission section title, description, and all feature cards are visible', () => {
+  it('[Test-015] should verify the mission section title, description, and all feature cards are visible', () => {
     cy.get('@home').then((home) => {
       cy.get('#about').within(() => {
         // Section image
@@ -86,7 +86,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── Services Grid ───────────────────────────────────────────────────────────
 
-  it('should verify the services section heading and all service cards match CMS data', () => {
+  it('[Test-016] should verify the services section heading and all service cards match CMS data', () => {
     cy.get('@home').then((home) => {
       const { services } = home;
 
@@ -132,7 +132,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── Contact / Consultation Form ─────────────────────────────────────────────
 
-  it('should validate form constraints and successfully dispatch a care consultation', () => {
+  it('[Test-017] should validate form constraints and successfully dispatch a care consultation', () => {
     cy.get('@home').then((home) => {
       cy.get('@homeData').then((homeData) => {
         const { form } = home.contact;
@@ -169,7 +169,7 @@ describe('Public Landing Homepage E2E Spec', () => {
 
   // ─── Contact Section Info ─────────────────────────────────────────────────────
 
-  it('should render the contact section title, description, and contact info from CMS', () => {
+  it('[Test-018] should render the contact section title, description, and contact info from CMS', () => {
     cy.get('@home').then((home) => {
       const { contact } = home;
 

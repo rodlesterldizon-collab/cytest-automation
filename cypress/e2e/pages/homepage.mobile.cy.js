@@ -15,7 +15,7 @@ describe('Public Landing Homepage Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Hero Section ──────────────────────────────────────────────────────
 
-  it('should render mobile hero section with visible branding and CTAs', () => {
+  it('[Test-019] should render mobile hero section with visible branding and CTAs', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(0).within(() => {
         cy.contains('span', home.hero.badge).should('be.visible');
@@ -29,7 +29,7 @@ describe('Public Landing Homepage Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Stats Grid ───────────────────────────────────────────────────────
 
-  it('should render stacked stats grid with all CMS values on mobile', () => {
+  it('[Test-020] should render stacked stats grid with all CMS values on mobile', () => {
     cy.get('@home').then((home) => {
       cy.get('section').eq(1).within(() => {
         home.stats.items.forEach(({ value, label }) => {
@@ -42,7 +42,7 @@ describe('Public Landing Homepage Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile About Section ─────────────────────────────────────────────────────
 
-  it('should render mission section and all 4 feature cards on mobile viewport', () => {
+  it('[Test-021] should render mission section and all 4 feature cards on mobile viewport', () => {
     cy.get('@home').then((home) => {
       cy.get('#about').within(() => {
         cy.contains('h2', home.about.title).should('be.visible');
@@ -58,7 +58,7 @@ describe('Public Landing Homepage Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Services Grid ─────────────────────────────────────────────────────
 
-  it('should render all 4 service cards in mobile stacked layout', () => {
+  it('[Test-022] should render all 4 service cards in mobile stacked layout', () => {
     cy.get('@home').then((home) => {
       const { services } = home;
 
@@ -77,7 +77,7 @@ describe('Public Landing Homepage Mobile Viewport Spec (375x812)', () => {
 
   // ─── Mobile Contact Form ──────────────────────────────────────────────────────
 
-  it('should allow typing and dispatching consultation form on mobile', () => {
+  it('[Test-023] should allow typing and dispatching consultation form on mobile', () => {
     cy.get('@home').then((home) => {
       cy.get('@homeData').then((homeData) => {
         const { form } = home.contact;
